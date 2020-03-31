@@ -19,7 +19,7 @@ public class FlutterbreakiteratorPlugin: FlutterPlugin, MethodCallHandler {
   private lateinit var channel : MethodChannel
 
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-    channel = MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "flutter_break_iterator")
+    channel = MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "flutterbreakiterator")
     channel.setMethodCallHandler(this);
   }
 
@@ -35,7 +35,7 @@ public class FlutterbreakiteratorPlugin: FlutterPlugin, MethodCallHandler {
   companion object {
     @JvmStatic
     fun registerWith(registrar: Registrar) {
-      val channel = MethodChannel(registrar.messenger(), "flutter_break_iterator")
+      val channel = MethodChannel(registrar.messenger(), "flutterbreakiterator")
       channel.setMethodCallHandler(FlutterbreakiteratorPlugin())
     }
   }
@@ -46,15 +46,16 @@ public class FlutterbreakiteratorPlugin: FlutterPlugin, MethodCallHandler {
     } else if (call.method == "getBreakIterator") {
       var list = ArrayList<String>()
       val boundary = BreakIterator.getWordInstance()
-      var sentence = call.argument<String>("sentence");
+      var sentence = call.arguments.toString()
       boundary.setText(sentence)
       var start = boundary.first()
       var end = boundary.next()
       while (end != BreakIterator.DONE) {
         val res: String = sentence!!.substring(start, end)
-        if (!(res.matches(Regex("\\[[a-z0-9]*\\]")) && isEmoji(res)) && !isPunctuation(res)) {
-          list.add(res)
-        }
+//        if (!(res.matches(Regex("\\[[a-z0-9]*\\]")) && isEmoji(res)) && !isPunctuation(res)) {
+//          list.add(res)
+//        }
+        list.add(res)
         start = end
         end = boundary.next()
       }
@@ -117,7 +118,8 @@ public class FlutterbreakiteratorPlugin: FlutterPlugin, MethodCallHandler {
   }
 
   fun isPunctuation(txt: String): Boolean {
-    val regex = "[\\u3000-\\u301e\\ufe10-\\ufe19\\ufe30-\\ufe44\\ufe50-\\ufe6b\\uff01-\\uffee]|[\\s]|[,\\.;\\:\"'!\\&\\$\\#\\@\\*\\(\\)\\%]"
+    //val regex = "[\\u3000-\\u301e\\ufe10-\\ufe19\\ufe30-\\ufe44\\ufe50-\\ufe6b\\uff01-\\uffee]|[\\s]|[,\\.;\\:\"'!\\&\\$\\#\\@\\*\\(\\)\\%]"
+    val regex = "[\\u3000-\\u301e\\ufe10-\\ufe19\\ufe30-\\ufe44\\ufe50-\\ufe6b\\uff01-\\uffee]|[\\s]"
     return txt.matches(Regex(regex))
   }
 

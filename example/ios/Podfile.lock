@@ -1,0 +1,22 @@
+PODS:
+  - Flutter (1.0.0)
+  - flutterbreakiterator (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - flutterbreakiterator (from `.symlinks/plugins/flutterbreakiterator/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  flutterbreakiterator:
+    :path: ".symlinks/plugins/flutterbreakiterator/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  flutterbreakiterator: ddafc0f54fe4e83ab10c902184df76af2403081e
+
+PODFILE CHECKSUM: 083258d7f5e80b42ea9bfee905fe93049bc04c64
+
+COCOAPODS: 1.8.4

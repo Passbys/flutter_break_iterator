@@ -9,6 +9,24 @@ public class SwiftFlutterbreakiteratorPlugin: NSObject, FlutterPlugin {
   }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    result("iOS " + UIDevice.current.systemVersion)
+     if call.method == "getBreakIterator" {
+        var tokensArray: [AnyHashable] = []
+        let text = call.arguments as! String
+        var range = CFRangeMake(CFIndex(0), CFIndex((text.count)))
+
+        let tokenizer = CFStringTokenizerCreate(kCFAllocatorDefault, text as CFString?, range, kCFStringTokenizerUnitWord, nil)
+
+        var tokenType = CFStringTokenizerAdvanceToNextToken(tokenizer)
+
+        while tokenType != [] {
+            range = CFStringTokenizerGetCurrentTokenRange(tokenizer)
+            let token = (text as NSString?)?.substring(with: NSRange(location: range.location, length: range.length))
+            tokensArray.append(token ?? "")
+            tokenType = CFStringTokenizerAdvanceToNextToken(tokenizer)
+        }
+        result(tokensArray)
+      } else {
+        result(nil)
+      }
   }
 }
